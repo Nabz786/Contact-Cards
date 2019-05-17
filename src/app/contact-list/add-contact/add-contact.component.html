@@ -1,0 +1,42 @@
+<!-- <div class="example-container">
+    <mat-form-field>
+        <input matInput placeholder="Input">
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput placeholder="Textarea"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-select placeholder="Select">
+            <mat-option value="option">Option</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div> -->
+<!-- <div class="input-container">
+
+</div> -->
+
+<mat-card class="mat-elevation-z4">
+    <mat-card-title>Contact Information</mat-card-title>
+    <mat-card-subtitle>Please Complete All Fields</mat-card-subtitle>
+    <mat-card-content>
+        <form (ngSubmit)="onSubmit(contactDetailsForm)" #contactDetailsForm="ngForm">
+            <table class="center">
+                <tr>
+                    <td>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="First Name" ngModel name="firstName" required>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="full-width">
+                            <input matInput placeholder="Last Name" ngModel name="lastName" required>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+            <button mat-raised-button color="primary" type="submit">Add Contact</button>
+        </form>
+    </mat-card-content>
+</mat-card>

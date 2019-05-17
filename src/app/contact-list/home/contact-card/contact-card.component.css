@@ -1,0 +1,41 @@
+mat-card {
+    height: 25em;
+    width: 20em;
+    margin: 1em 2em 2em 1.75em;
+    padding: 0;
+    border-radius: 20px;
+}
+
+mat-card-header {
+    text-align: center;
+    justify-content: center;
+    padding-top: .25em;
+}
+
+mat-card-actions {
+    text-align: center;
+    margin-top: 1.3em;
+    padding: 0;
+}
+
+mat-card-content {
+    margin-top: -.6em;
+}
+
+ul {
+    text-align: left;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    margin-left: 1.5em;
+}
+
+.bluebox {
+    background-color: #3f51b5;
+    height: 50%;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
