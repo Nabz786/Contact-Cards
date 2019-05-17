@@ -1,4 +1,5 @@
-# ContactList
+# ContactList - A Webapp to store your Contacts!
+See the project at: https://contact-list-33124.firebaseapp.com/home
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
