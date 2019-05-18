@@ -18,10 +18,8 @@ export class AddContactComponent implements OnInit {
   }
 
   onSubmit(info: NgForm) {
+    console.log(info);
      this.contactStorServ.addNewContact(
        new ContactModel(info.value.firstName, info.value.lastName));
   }
-
-  
-
 }

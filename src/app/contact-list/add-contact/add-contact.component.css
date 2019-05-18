@@ -8,3 +8,7 @@ mat-card {
 table.center {
     margin: auto;
 }
+
+.full-width {
+    width: 100%;
+}
