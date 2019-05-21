@@ -36,12 +36,16 @@ export class AddContactComponent implements OnInit {
 
   onSubmit() {
     console.log(this.contactDetailsForm);
-    this.contactStorServ.addNewContact(
-      new ContactModel(
-        this.contactDetailsForm.value.firstName,
-        this.contactDetailsForm.value.lastName
-      )
-    );
+    this.contactStorServ.addNewContact({
+      firstName: this.contactDetailsForm.value.firstName,
+      lastName: this.contactDetailsForm.value.lastName,
+      occupation: this.contactDetailsForm.value.occupation,
+      phoneNumber: this.contactDetailsForm.value.phoneNum,
+      emailAddress: this.contactDetailsForm.value.emailAddr,
+      streetAddress: this.contactDetailsForm.value.streetAddr
+      // birthDate: this.contactDetailsForm.value.birthDate
+    });
+    console.log(this.contactDetailsForm.value.birthDate);
   }
 
   get firstName() {
