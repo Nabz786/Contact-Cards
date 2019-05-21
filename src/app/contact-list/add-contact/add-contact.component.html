@@ -2,47 +2,78 @@
     <mat-card-title>Contact Information</mat-card-title>
     <mat-card-subtitle>Please Complete All Fields</mat-card-subtitle>
     <mat-card-content>
-        <form (ngSubmit)="onSubmit(contactDetailsForm)" #contactDetailsForm="ngForm">
+        <form [formGroup]="contactDetailsForm" (ngSubmit)="onSubmit()">
             <table class="center">
                 <tr>
                     <td>
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="First Name" ngModel name="firstName" required>
+                            <input matInput placeholder="First Name" formControlName="firstName">
+                            <mat-error *ngIf="firstName.invalid && firstName.touched">
+                                Please Provide A First Name
+                            </mat-error>
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="Last Name" ngModel name="lastName" required>
+                            <input matInput placeholder="Last Name" formControlName="lastName">
+                            <mat-error *ngIf="lastName.invalid && lastName.touched">
+                                Please Provide A Last Name
+                            </mat-error>
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="Phone Number" ngModel name="phoneNumber" required>
+                            <input matInput placeholder="Phone Number" formControlName="phoneNum">
+                            <mat-hint>
+                                ex. 123-456-7890
+                            </mat-hint>
+                            <mat-error *ngIf="phoneNum.invalid && phoneNum.touched">
+                                Please Provide A Phone Number ex. 123-456-7890
+                            </mat-error>
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="Email Address" ngModel name="emailAddr" required email>
+                            <input matInput placeholder="Email Address" formControlName="emailAddr">
+                            <mat-error *ngIf="emailAddr.invalid && emailAddr.touched">
+                                Please Provide An Email Address
+                            </mat-error>
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <mat-form-field class="full-width">
-                            <input matInput placeholder="Address" ngModel name="houseAddr" required>
+                            <input matInput placeholder="Address" formControlName="streetAddr">
+                            <mat-hint>
+                                Not Required.
+                            </mat-hint>
                         </mat-form-field>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <mat-form-field class="full-width">
-                            <input matInput [matDatepicker]="datePicker" placeholder="Birthdate" required ngModel name="birthDate">
+                            <input matInput placeholder="Occupation" formControlName="occupation">
+                            <mat-hint>
+                                Not Required.
+                            </mat-hint>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <mat-form-field class="full-width">
+                            <input matInput [matDatepicker]="datePicker" placeholder="Birthdate" formControlName="birthDate">
                             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
                             <mat-datepicker #datePicker touchUi="true"></mat-datepicker>
+                            <mat-error *ngIf="birthDate.invalid && birthDate.touched">
+                                Please Provide A Birthdate
+                            </mat-error>
                         </mat-form-field>
                     </td>
                 </tr>
