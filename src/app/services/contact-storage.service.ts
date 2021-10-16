@@ -1,20 +1,25 @@
-import { ContactModel } from "../shared/contact.model";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Contact } from "../shared/contact.model";
+import { ServiceResponse } from "../shared/ServiceResponse.model";
 
-export class ContactStorageService {
-  contacts: ContactModel[] = [
-    {
-      firstName: "Test",
-      lastName: "Tester",
-      occupation: "Software Engineer",
-      phoneNumber: "616-442-3233",
-      emailAddress: "test@test.com",
-      streetAddress: "123 Awesome St"
-      // birthDate: "01/01/1998"
+@Injectable({
+  providedIn: "root"
+})
+export class ContactsService {
+    private baseUrl = "http://localhost:57238/contacts"
+
+    constructor(private httpClient: HttpClient) { }
+
+    public addContact(contact: Contact) {
+        let finalUrl = this.baseUrl + "/add";
+
+        return this.httpClient.post<ServiceResponse>(finalUrl, contact);
     }
-  ];
 
-  addNewContact(newContact: ContactModel) {
-    this.contacts.push(newContact);
-    console.log(this.contacts);
-  }
+    public getContacts() {
+      let finalUrl = this.baseUrl + "/getContacts";
+
+      return this.httpClient.get<ServiceResponse>(finalUrl);
+    }
 }

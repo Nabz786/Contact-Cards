@@ -1,51 +1,50 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { NgForm, FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ContactStorageService } from "src/app/services/contact-storage.service";
-import { ContactModel } from "src/app/shared/contact.model";
+import { Component, Inject, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { ContactSubjectService } from "src/app/services/contact-subject.service";
+import { Contact } from "src/app/shared/contact.model";
 
 @Component({
   selector: "app-add-contact",
   templateUrl: "./add-contact.component.html",
-  styleUrls: ["./add-contact.component.css"]
+  styleUrls: ["./add-contact.component.css"],
 })
 export class AddContactComponent implements OnInit {
   contactDetailsForm: FormGroup;
 
   constructor(
-    private contactStorServ: ContactStorageService,
-    private fb: FormBuilder
+    private contactSubjectService: ContactSubjectService,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<AddContactComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Contact
   ) {}
 
   ngOnInit() {
     this.contactDetailsForm = this.fb.group({
       firstName: ["", [Validators.required]],
       lastName: ["", [Validators.required]],
-      phoneNum: [
-        "",
-        [
-          Validators.required
-          // Validators.pattern('((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}')
-        ]
-      ],
-      emailAddr: ["", [Validators.required, Validators.email]],
-      streetAddr: [""],
-      occupation: [""],
-      birthDate: ["", [Validators.required]]
+      // phoneNum: [
+      //   "",
+      //   [
+      //     Validators.required
+      //     // Validators.pattern('((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}')
+      //   ]
+      // ],
+      // emailAddr: ["", [Validators.required, Validators.email]],
+      // streetAddr: [""],
+      // occupation: [""],
+      //birthDate: ["", [Validators.required]]
     });
   }
 
   onSubmit() {
-    console.log(this.contactDetailsForm);
-    this.contactStorServ.addNewContact({
-      firstName: this.contactDetailsForm.value.firstName,
-      lastName: this.contactDetailsForm.value.lastName,
-      occupation: this.contactDetailsForm.value.occupation,
-      phoneNumber: this.contactDetailsForm.value.phoneNum,
-      emailAddress: this.contactDetailsForm.value.emailAddr,
-      streetAddress: this.contactDetailsForm.value.streetAddr
-      // birthDate: this.contactDetailsForm.value.birthDate
-    });
-    console.log(this.contactDetailsForm.value.birthDate);
+    let newContact = this.contactDetailsForm.getRawValue() as Contact;
+
+    this.contactSubjectService.addContact(newContact, this.dialogRef);
+  }
+
+  private onNoClick(): void {
+    this.dialogRef.close();
   }
 
   get firstName() {

@@ -9,12 +9,12 @@ import { HeaderComponent } from './header/header.component';
 import { AddContactComponent } from './contact-list/add-contact/add-contact.component';
 import { HomeComponent } from './contact-list/home/home.component';
 import { NotFoundComponent } from './contact-list/not-found/not-found.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactCardComponent } from './contact-list/home/contact-card/contact-card.component';
-import { ContactStorageService } from './services/contact-storage.service';
 
-import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { ContactsService } from './services/contact-storage.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,9 +31,10 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [ContactStorageService],
+  providers: [ContactsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

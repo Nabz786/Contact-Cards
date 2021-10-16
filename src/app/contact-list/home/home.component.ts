@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ContactStorageService } from 'src/app/services/contact-storage.service';
-import { ContactModel } from 'src/app/shared/contact.model';
+import { Observable } from 'rxjs';
+import { ContactsService } from 'src/app/services/contact-storage.service';
+import { ContactSubjectService } from 'src/app/services/contact-subject.service';
+import { Contact } from 'src/app/shared/contact.model';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +11,11 @@ import { ContactModel } from 'src/app/shared/contact.model';
 })
 export class HomeComponent implements OnInit {
 
-  contactArr: ContactModel[] = []
+  public $contacts: Observable<Contact[]>;
 
-  constructor(private contactService: ContactStorageService) { }
+  constructor(private contactsSubjectService: ContactSubjectService) { }
 
   ngOnInit() {
-    this.contactArr = this.contactService.contacts;
+    this.$contacts = this.contactsSubjectService.contacts$;
   }
 }
