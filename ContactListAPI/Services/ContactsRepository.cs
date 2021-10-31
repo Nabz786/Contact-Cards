@@ -2,6 +2,8 @@ using ContactListAPI.Data;
 using ContactListAPI.Models;
 using ContactListAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ContactListAPI.Services
@@ -15,33 +17,107 @@ namespace ContactListAPI.Services
             _contactsContext = contactsContext;
         }
 
-        public async Task<ServiceResponse<string>> AddContactAsync(Contact contact)
+        public async Task<IEnumerable<Contact>> GetContactsAsync()
         {
-            var serviceResponse = new ServiceResponse<string>();
+            var contacts = await _contactsContext.Contacts.AsNoTracking().ToListAsync();
 
-            if (await DoesContactExist(contact.FirstName, contact.LastName)) {
+            return contacts;
+        }
+
+        public async Task<ServiceResponse<Contact>> AddContactAsync(Contact contact)
+        {
+            var serviceResponse = new ServiceResponse<Contact>();
+
+            if (await DoesContactExist(contact.FirstName, contact.LastName))
+            {
                 serviceResponse.Success = false;
-                serviceResponse.Error = "Contact Already Exists";
+                serviceResponse.Message = "Contact Already Exists";
 
                 return serviceResponse;
             }
 
-            await _contactsContext.AddAsync(contact);
-            await _contactsContext.SaveChangesAsync();
+            try
+            {
+                var addedContact = await _contactsContext.AddAsync(contact);
+                await _contactsContext.SaveChangesAsync();
 
-            serviceResponse.Success = true;
-            return serviceResponse;
+                serviceResponse.ReturnResource = addedContact.Entity;
+
+                return serviceResponse;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = $"An error occurred while trying to add contact {ex.Message}";
+
+                return serviceResponse;
+            }
         }
 
-        public async Task<ServiceResponse<Contact>> GetContactsAsync() {
+        public async Task<ServiceResponse<Contact>> DeleteContactAsync(int contactId)
+        {
             var serviceResponse = new ServiceResponse<Contact>();
 
-            var contacts = await _contactsContext.Contacts.ToListAsync();
+            var contactToRemove = await _contactsContext.Contacts.FindAsync(contactId);
 
-            serviceResponse.ReturnPayload = contacts;
-            serviceResponse.Success = true;
+            if (contactToRemove == null)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Contact Does Not Exist";
 
-            return serviceResponse;
+                return serviceResponse;
+            }
+
+            try
+            {
+                _contactsContext.Contacts.Remove(contactToRemove);
+
+                await _contactsContext.SaveChangesAsync();
+
+                serviceResponse.ReturnResource = contactToRemove;
+
+                return serviceResponse;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = $"An error occurred while trying to delete the resource {ex.Message}";
+
+                return serviceResponse;
+            }
+        }
+
+        public async Task<ServiceResponse<Contact>> UpdateContactAsync(Contact updatedContact)
+        {
+            var serviceResponse = new ServiceResponse<Contact>();
+
+            var contactToUpdate = await _contactsContext.Contacts.FindAsync(updatedContact.Id);
+
+            if (contactToUpdate == null)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Contact Does Not Exist";
+
+                return serviceResponse;
+            }
+
+            contactToUpdate.FirstName = updatedContact.FirstName;
+            contactToUpdate.LastName = updatedContact.LastName;
+
+            try
+            {
+                _contactsContext.Contacts.Update(contactToUpdate);
+
+                await _contactsContext.SaveChangesAsync();
+
+                serviceResponse.ReturnResource = contactToUpdate;
+
+                return serviceResponse;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = $"An Error occurred while trying to update resource {ex.Message}";
+
+                return serviceResponse;
+            }
         }
 
         private async Task<bool> DoesContactExist(string firstName, string lastName)
