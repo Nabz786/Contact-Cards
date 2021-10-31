@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactCardComponent } from './contact-list/home/contact-card/contact-card.component';
 
 import { environment } from '../environments/environment';
-import { ContactsService } from './services/contact-storage.service';
+import { ContactsService } from './services/contact.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
