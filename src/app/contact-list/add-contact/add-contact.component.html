@@ -1,7 +1,18 @@
-<h1 mat-dialog-title>Add Contact</h1>
+<h1 mat-dialog-title>        
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>{{modalHeaderText}}</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="closeDialog()">
+            <mat-icon mat-list-icon>close</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteContact()" *ngIf="data.isEdit">
+            <mat-icon mat-list-icon>delete</mat-icon>
+        </button>
+    </mat-toolbar>
+</h1>
 <div mat-dialog-content>
     <form [formGroup]="contactDetailsForm" (ngSubmit)="onSubmit()" id="addContactForm">
-   
+
         <mat-form-field class="full-width">
             <input matInput placeholder="First Name" formControlName="firstName">
             <mat-error *ngIf="firstName.invalid && firstName.touched">
@@ -18,9 +29,8 @@
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button color="primary" type="submit" [disabled]="!contactDetailsForm.valid" form="addContactForm">
-        Add Contact
+        {{modalPrimaryButtonText}}
     </button>
-    <button mat-button mat-dialog-close>Cancel</button>
 </div>
 
         

@@ -5,73 +5,108 @@ import { ContactSubjectService } from "src/app/services/contact-subject.service"
 import { Contact } from "src/app/shared/contact.model";
 
 @Component({
-  selector: "app-add-contact",
-  templateUrl: "./add-contact.component.html",
-  styleUrls: ["./add-contact.component.css"],
+    selector: "app-add-contact",
+    templateUrl: "./add-contact.component.html",
+    styleUrls: ["./add-contact.component.css"],
 })
 export class AddContactComponent implements OnInit {
-  contactDetailsForm: FormGroup;
+    public contactDetailsForm: FormGroup;
+    public modalHeaderText: string = "";
+    public modalPrimaryButtonText: string = "";
 
-  constructor(
-    private contactSubjectService: ContactSubjectService,
-    private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddContactComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Contact
-  ) {}
+    constructor(
+        private contactSubjectService: ContactSubjectService,
+        private fb: FormBuilder,
+        public dialogRef: MatDialogRef<AddContactComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean; contact: Contact }
+    ) { }
 
-  ngOnInit() {
-    this.contactDetailsForm = this.fb.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      // phoneNum: [
-      //   "",
-      //   [
-      //     Validators.required
-      //     // Validators.pattern('((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}')
-      //   ]
-      // ],
-      // emailAddr: ["", [Validators.required, Validators.email]],
-      // streetAddr: [""],
-      // occupation: [""],
-      //birthDate: ["", [Validators.required]]
-    });
-  }
+    ngOnInit() {
+        this.setupModalHeaderText();
+        this.setupModalForm(this.data.contact);
+    }
 
-  onSubmit() {
-    let newContact = this.contactDetailsForm.getRawValue() as Contact;
+    public deleteContact() {
+        this.contactSubjectService.deleteContact(
+            this.data.contact.id,
+            this.dialogRef
+        );
+    }
 
-    this.contactSubjectService.addContact(newContact, this.dialogRef);
-  }
+    get firstName() {
+        return this.contactDetailsForm.get("firstName");
+    }
 
-  private onNoClick(): void {
-    this.dialogRef.close();
-  }
+    get lastName() {
+        return this.contactDetailsForm.get("lastName");
+    }
 
-  get firstName() {
-    return this.contactDetailsForm.get("firstName");
-  }
+    get phoneNum() {
+        return this.contactDetailsForm.get("phoneNum");
+    }
 
-  get lastName() {
-    return this.contactDetailsForm.get("lastName");
-  }
+    get emailAddr() {
+        return this.contactDetailsForm.get("emailAddr");
+    }
 
-  get phoneNum() {
-    return this.contactDetailsForm.get("phoneNum");
-  }
+    get streetAddr() {
+        return this.contactDetailsForm.get("streetAddr");
+    }
 
-  get emailAddr() {
-    return this.contactDetailsForm.get("emailAddr");
-  }
+    get occupation() {
+        return this.contactDetailsForm.get("occupation");
+    }
 
-  get streetAddr() {
-    return this.contactDetailsForm.get("streetAddr");
-  }
+    get birthDate() {
+        return this.contactDetailsForm.get("birthDate");
+    }
 
-  get occupation() {
-    return this.contactDetailsForm.get("occupation");
-  }
+    public closeDialog(): void {
+        this.dialogRef.close();
+    }
 
-  get birthDate() {
-    return this.contactDetailsForm.get("birthDate");
-  }
+    public onSubmit() {
+        let newContact = this.contactDetailsForm.getRawValue() as Contact;
+
+        if (newContact.id !== 0) {
+            this.contactSubjectService.updateContact(newContact, this.dialogRef);
+            return;
+        }
+
+        this.contactSubjectService.addContact(newContact, this.dialogRef);
+    }
+
+    private setupModalHeaderText(): void {
+        if (this.data.isEdit) {
+            this.modalHeaderText = "Edit Contact";
+            this.modalPrimaryButtonText = "Update Contact";
+            return;
+        }
+
+        this.modalHeaderText = "Add Contact";
+        this.modalPrimaryButtonText = "Add Contact";
+    }
+
+    private setupModalForm(contact: Contact): void {
+        this.contactDetailsForm = this.fb.group({
+            id: 0,
+            firstName: ["", [Validators.required]],
+            lastName: ["", [Validators.required]],
+            // phoneNum: [
+            //   "",
+            //   [
+            //     Validators.required
+            //     // Validators.pattern('((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}')
+            //   ]
+            // ],
+            // emailAddr: ["", [Validators.required, Validators.email]],
+            // streetAddr: [""],
+            // occupation: [""],
+            //birthDate: ["", [Validators.required]]
+        });
+
+        if (contact) {
+            this.contactDetailsForm.patchValue(contact);
+        }
+    }
 }
