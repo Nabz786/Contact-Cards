@@ -30,13 +30,7 @@ ul {
 li {
     list-style: none;
     margin-left: 1.5em;
-    /* text-align: center; */
 }
-
-
-/* ul li span {
-    margin-left: 3em;
-} */
 
 .bluebox {
     background-color: #3f51b5;
