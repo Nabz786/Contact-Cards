@@ -8,7 +8,7 @@ namespace ContactListAPI.Services.Interfaces
     {
         Task<ServiceResponse<Contact>> AddContactAsync(Contact contact);
 
-        Task<IEnumerable<Contact>> GetContactsAsync();
+        Task<IEnumerable<Contact>> GetContactsAsync(int userId);
 
         Task<ServiceResponse<Contact>> DeleteContactAsync(int contactId);
 
