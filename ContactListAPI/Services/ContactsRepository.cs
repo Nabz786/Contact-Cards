@@ -4,6 +4,7 @@ using ContactListAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ContactListAPI.Services
@@ -17,9 +18,12 @@ namespace ContactListAPI.Services
             _contactsContext = contactsContext;
         }
 
-        public async Task<IEnumerable<Contact>> GetContactsAsync()
+        public async Task<IEnumerable<Contact>> GetContactsAsync(int userId)
         {
-            var contacts = await _contactsContext.Contacts.AsNoTracking().ToListAsync();
+            var contacts = await _contactsContext.Contacts
+                .AsNoTracking()
+                .Where(contact => contact.UserId == userId)
+                .ToListAsync();
 
             return contacts;
         }
@@ -28,7 +32,7 @@ namespace ContactListAPI.Services
         {
             var serviceResponse = new ServiceResponse<Contact>();
 
-            if (await DoesContactExist(contact.FirstName, contact.LastName))
+            if (await DoesContactExist(contact.UserId, contact.FirstName, contact.LastName))
             {
                 serviceResponse.Success = false;
                 serviceResponse.Message = "Contact Already Exists";
@@ -120,10 +124,12 @@ namespace ContactListAPI.Services
             }
         }
 
-        private async Task<bool> DoesContactExist(string firstName, string lastName)
+        private async Task<bool> DoesContactExist(int userId, string firstName, string lastName)
         {
             return await _contactsContext.Contacts
-                .AnyAsync(contact => contact.FirstName.ToLower().Equals(firstName) && contact.LastName.ToLower().Equals(lastName));
+                .AnyAsync(contact => contact.FirstName.ToLower().Equals(firstName)
+                            && contact.LastName.ToLower().Equals(lastName)
+                            && contact.UserId == userId);
         }
     }
 }

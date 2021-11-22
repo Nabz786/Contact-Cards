@@ -1,11 +1,13 @@
 using ContactListAPI.Models;
 using ContactListAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace ContactListAPI.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ContactsController : ControllerBase
@@ -17,14 +19,12 @@ namespace ContactListAPI.Controllers
             _contactsRepository = contactsRepository;
         }
 
-        [Route("GetContacts")]
+        [Route("GetContacts/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<IActionResult> GetContacts()
+        public async Task<IActionResult> GetContacts(int userId)
         {
-            //Eventually we'll pass in the user id and get contacts by user, but for now we'll just return all
-
-            var contacts = await _contactsRepository.GetContactsAsync();
+            var contacts = await _contactsRepository.GetContactsAsync(userId);
 
             return Ok(contacts);
         }
