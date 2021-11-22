@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { ContactSubjectService } from "src/app/services/contact-subject.service";
+import { UserSessionService } from "src/app/services/usersession.service";
 import { Contact } from "src/app/shared/contact.model";
 
 @Component({
@@ -16,19 +17,20 @@ export class AddContactComponent implements OnInit {
 
     constructor(
         private contactSubjectService: ContactSubjectService,
+        private userSessionService: UserSessionService,
         private fb: FormBuilder,
         public dialogRef: MatDialogRef<AddContactComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { isEdit: boolean; contact: Contact }
+        @Inject(MAT_DIALOG_DATA) public modalParameters: { isEdit: boolean; contact: Contact }
     ) { }
 
     ngOnInit() {
         this.setupModalHeaderText();
-        this.setupModalForm(this.data.contact);
+        this.setupModalForm(this.modalParameters.contact);
     }
 
     public deleteContact() {
         this.contactSubjectService.deleteContact(
-            this.data.contact.id,
+            this.modalParameters.contact.id,
             this.dialogRef
         );
     }
@@ -41,24 +43,8 @@ export class AddContactComponent implements OnInit {
         return this.contactDetailsForm.get("lastName");
     }
 
-    get phoneNum() {
-        return this.contactDetailsForm.get("phoneNum");
-    }
-
-    get emailAddr() {
-        return this.contactDetailsForm.get("emailAddr");
-    }
-
-    get streetAddr() {
-        return this.contactDetailsForm.get("streetAddr");
-    }
-
-    get occupation() {
-        return this.contactDetailsForm.get("occupation");
-    }
-
-    get birthDate() {
-        return this.contactDetailsForm.get("birthDate");
+    get email() {
+        return this.contactDetailsForm.get("emailAddress");
     }
 
     public closeDialog(): void {
@@ -73,11 +59,12 @@ export class AddContactComponent implements OnInit {
             return;
         }
 
+        newContact.userId = this.userSessionService.getUserId();
         this.contactSubjectService.addContact(newContact, this.dialogRef);
     }
 
     private setupModalHeaderText(): void {
-        if (this.data.isEdit) {
+        if (this.modalParameters.isEdit) {
             this.modalHeaderText = "Edit Contact";
             this.modalPrimaryButtonText = "Update Contact";
             return;
@@ -92,17 +79,10 @@ export class AddContactComponent implements OnInit {
             id: 0,
             firstName: ["", [Validators.required]],
             lastName: ["", [Validators.required]],
-            // phoneNum: [
-            //   "",
-            //   [
-            //     Validators.required
-            //     // Validators.pattern('((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}')
-            //   ]
-            // ],
-            // emailAddr: ["", [Validators.required, Validators.email]],
-            // streetAddr: [""],
-            // occupation: [""],
-            //birthDate: ["", [Validators.required]]
+            phoneNumber: [""],
+            emailAddress: ["", [Validators.email]],
+            streetAddress: [""],
+            occupation: [""],
         });
 
         if (contact) {
