@@ -1,0 +1,29 @@
+<ng-container *ngIf="!($isLoggedIn | async)" >
+    <div class="login-page" @showLoginPage>
+        <div class="login-container" [@showRegisterForm]="showRegisterForm ? 'showForm' : 'hideForm'">
+            <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+                <p class="mat-h2 margin-top-1rem">{{showRegisterForm? "Create Account" : "Sign In" }}</p>
+                <mat-form-field class="margin-top-1rem width-80pct">
+                    <input matInput placeholder="Username" formControlName="username">
+                    <mat-error>Please enter a username</mat-error>
+                </mat-form-field>
+                <mat-form-field class="width-80pct">
+                    <input type="password" matInput placeholder="Password" formControlName="password">
+                    <mat-error>Please enter a password</mat-error>
+                </mat-form-field>
+                <button 
+                    mat-flat-button color="primary" 
+                    class="margin-top-1rem width-80pct login-button" 
+                    type="submit">
+                    <mat-progress-bar *ngIf="isLoading" mode="indeterminate" style="border-radius: 10px 10px 0px 0px;"></mat-progress-bar>
+                    {{showRegisterForm ? "Register" : "Login"}}
+                </button>
+            </form>
+            <button class="register-button margin-top-1rem" (click)="toggleRegisterForm()">
+                {{showRegisterForm ? "Back to login" : "Click here to register"}}
+            </button>
+        </div>
+    </div>
+</ng-container>
+
+
