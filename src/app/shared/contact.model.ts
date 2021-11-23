@@ -1,10 +1,10 @@
 export class Contact {
     id: number;
+    userId: number;
     firstName: string;
     lastName: string;
-    // occupation: string;
-    // phoneNumber: string;
-    // emailAddress: string;
-    // streetAddress: string;
-    // birthDate: string | Date;
+    emailAddress: string;
+    streetAddress: string;
+    occupation: string;
+    phoneNumber: string;
 }
