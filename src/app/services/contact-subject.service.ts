@@ -14,7 +14,7 @@ export class ContactSubjectService {
 
     public contacts$: Observable<Contact[]> = this.contactsSubject.asObservable();
 
-    constructor(private contactsService: ContactsService) {}
+    constructor(private contactsService: ContactsService) { }
 
     public addContact(contact: Contact, dialogRef: MatDialogRef<AddContactComponent>): void {
         this.contactsService.addContact(contact)
@@ -66,8 +66,8 @@ export class ContactSubjectService {
             })
     }
 
-    public getContacts() {
-        this.contactsService.getContacts()
+    public getContacts(userId: number) {
+        this.contactsService.getContacts(userId)
             .subscribe((contacts: Contact[]) => {
                    this.contactsSubject.next(contacts);
             });

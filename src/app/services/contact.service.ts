@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
 import { Contact } from "../shared/contact.model";
 import { ServiceResponse } from "../shared/ServiceResponse.model";
 
@@ -7,7 +8,7 @@ import { ServiceResponse } from "../shared/ServiceResponse.model";
     providedIn: "root"
 })
 export class ContactsService {
-    private baseUrl = "http://localhost:57238/contacts"
+    private baseUrl = environment.contactsApiUrl;
 
     constructor(private httpClient: HttpClient) { }
 
@@ -17,10 +18,10 @@ export class ContactsService {
         return this.httpClient.post<ServiceResponse>(finalUrl, contact);
     }
 
-    public getContacts() {
+    public getContacts(userId: number) {
         let finalUrl = this.baseUrl + "/getContacts";
 
-        return this.httpClient.get<Contact[]>(finalUrl);
+        return this.httpClient.get<Contact[]>(finalUrl + `/${userId}`);
     }
 
     public updateContact(updatedContact: Contact) {
