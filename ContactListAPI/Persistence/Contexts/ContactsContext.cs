@@ -1,7 +1,7 @@
-using ContactListAPI.Models;
+using ContactListAPI.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContactListAPI.Data
+namespace ContactListAPI.Persistence.Contexts
 {
   public class ContactsContext : DbContext
   {

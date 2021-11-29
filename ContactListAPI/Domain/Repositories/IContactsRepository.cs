@@ -1,8 +1,9 @@
-using ContactListAPI.Models;
+using ContactListAPI.Domain.Models;
+using ContactListAPI.Domain.Models.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ContactListAPI.Services.Interfaces
+namespace ContactListAPI.Domain.Repositories
 {
     public interface IContactsRepository
     {

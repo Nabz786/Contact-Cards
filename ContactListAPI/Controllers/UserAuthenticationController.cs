@@ -1,4 +1,6 @@
-using ContactListAPI.Models;
+using ContactListAPI.Domain.Models;
+using ContactListAPI.Domain.Models.Requests;
+using ContactListAPI.Domain.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

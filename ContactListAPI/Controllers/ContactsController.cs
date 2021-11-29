@@ -1,5 +1,5 @@
-using ContactListAPI.Models;
-using ContactListAPI.Services.Interfaces;
+using ContactListAPI.Domain.Models;
+using ContactListAPI.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

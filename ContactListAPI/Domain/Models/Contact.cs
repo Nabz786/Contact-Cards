@@ -1,4 +1,4 @@
-namespace ContactListAPI.Models
+namespace ContactListAPI.Domain.Models
 {
     public class Contact
     {

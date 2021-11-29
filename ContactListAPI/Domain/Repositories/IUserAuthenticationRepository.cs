@@ -1,8 +1,10 @@
+using ContactListAPI.Domain.Models;
+using ContactListAPI.Domain.Models.Responses;
 using System.Threading.Tasks;
 
-namespace ContactListAPI.Models
+namespace ContactListAPI.Domain.Repositories
 {
-  public interface IUserAuthenticationRepository
+    public interface IUserAuthenticationRepository
   {
     Task<UserLoginResponse> Register(User user, string password);
 

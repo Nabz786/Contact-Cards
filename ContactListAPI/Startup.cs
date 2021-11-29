@@ -1,7 +1,6 @@
-using ContactListAPI.Data;
-using ContactListAPI.Models;
-using ContactListAPI.Services;
-using ContactListAPI.Services.Interfaces;
+using ContactListAPI.Domain.Repositories;
+using ContactListAPI.Persistence.Contexts;
+using ContactListAPI.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

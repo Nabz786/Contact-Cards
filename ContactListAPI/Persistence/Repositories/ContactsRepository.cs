@@ -1,13 +1,14 @@
-using ContactListAPI.Data;
-using ContactListAPI.Models;
-using ContactListAPI.Services.Interfaces;
+using ContactListAPI.Domain.Models;
+using ContactListAPI.Domain.Models.Responses;
+using ContactListAPI.Domain.Repositories;
+using ContactListAPI.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ContactListAPI.Services
+namespace ContactListAPI.Persistence.Repositories
 {
     public class ContactsRepository : IContactsRepository
     {

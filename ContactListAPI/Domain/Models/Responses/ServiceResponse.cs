@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace ContactListAPI.Models
+namespace ContactListAPI.Domain.Models.Responses
 {
     public class ServiceResponse<T>
     {

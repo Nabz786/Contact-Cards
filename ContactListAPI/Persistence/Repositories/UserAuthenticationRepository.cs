@@ -1,4 +1,7 @@
-using ContactListAPI.Models;
+using ContactListAPI.Domain.Models;
+using ContactListAPI.Domain.Models.Responses;
+using ContactListAPI.Domain.Repositories;
+using ContactListAPI.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactListAPI.Data
+namespace ContactListAPI.Persistence.Repositories
 {
     public class UserAuthenticationRepository : IUserAuthenticationRepository
     {
