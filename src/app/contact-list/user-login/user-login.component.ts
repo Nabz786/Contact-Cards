@@ -1,12 +1,12 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Observable, throwError } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ContactSubjectService } from 'src/app/services/contact-subject.service';
 import { LoginStatusSubjectService } from 'src/app/services/login-status.subject.service';
 import { UserSessionService } from 'src/app/services/usersession.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -52,6 +52,8 @@ export class UserLoginComponent implements OnInit {
 
     public $isLoggedIn: Observable<boolean>;
 
+    @ViewChild(FormGroupDirective) formDirective: FormGroupDirective;
+
     @Input() logoutEvent: boolean = false; 
 
     constructor(
@@ -64,11 +66,25 @@ export class UserLoginComponent implements OnInit {
 
     public ngOnInit(): void {
         this.initializeLoginForm();
-        this.$isLoggedIn = this.loginStatusSubjectService.$loginStatus;
+        this.$isLoggedIn = this.loginStatusSubjectService.$loginStatus
+            .pipe(
+                tap((loginStatus: boolean) => {
+                    if (!loginStatus) {
+                        this.isLoading = false;
+                        this.isLoggedIn = false;
+                        this.showRegisterForm = false;
+                    }
+                })
+            )
     }
 
     public toggleRegisterForm(): void {
         this.showRegisterForm = !this.showRegisterForm;
+
+        this.loginForm.reset();
+
+        //Resets the submitted property of the form to false to remove the warning messages
+        this.formDirective.resetForm()
     }
 
     public handleSubmit(): void {
@@ -97,6 +113,12 @@ export class UserLoginComponent implements OnInit {
 
     private registerUser(formValues: any): void {
         this.authenticationService.register(formValues.username, formValues.password)
+            .pipe(
+                catchError((error: HttpErrorResponse) => {
+                    this.isLoading = false;
+                    return throwError(error);
+                })
+            )
             .subscribe((registerResponse: any) => {
                 this.handleAuthenticationResponse(registerResponse);
             })
@@ -106,6 +128,8 @@ export class UserLoginComponent implements OnInit {
         this.authenticationService.login(formValues.username, formValues.password)
             .pipe(
                 catchError((error: HttpErrorResponse) => {
+
+                    //check the error status code, if it's a 401 unauthorized show bad login message
                     this.isLoading = false;
                     return throwError(error);
                 })
@@ -116,6 +140,8 @@ export class UserLoginComponent implements OnInit {
     }
 
     private handleAuthenticationResponse(loginResponse: any): void {
+        this.isLoading = false;
+
         if (loginResponse.success) {
             this.userSessionService.saveToken(loginResponse.token);
             this.userSessionService.saveUserId(loginResponse.userId);
@@ -123,10 +149,12 @@ export class UserLoginComponent implements OnInit {
             this.contactSubjectService.getContacts(loginResponse.userId);
 
             this.isLoggedIn = true;
+
+
             this.loginStatusSubjectService.setLoginStatus(true);
             this.loginForm.reset();
         }
 
-        this.isLoading = false;
+        //show error message 
     }
 }
