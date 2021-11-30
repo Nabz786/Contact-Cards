@@ -14,12 +14,13 @@
                 <button 
                     mat-flat-button color="primary" 
                     class="margin-top-1rem width-80pct login-button" 
-                    type="submit">
+                    type="submit"
+                    [disabled]="isLoading">
                     <mat-progress-bar *ngIf="isLoading" mode="indeterminate" style="border-radius: 10px 10px 0px 0px;"></mat-progress-bar>
                     {{showRegisterForm ? "Register" : "Login"}}
                 </button>
             </form>
-            <button class="register-button margin-top-1rem" (click)="toggleRegisterForm()">
+            <button class="register-button margin-top-1rem" (click)="toggleRegisterForm()"  [disabled]="isLoading">
                 {{showRegisterForm ? "Back to login" : "Click here to register"}}
             </button>
         </div>
