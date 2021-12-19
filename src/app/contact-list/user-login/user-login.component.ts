@@ -8,6 +8,7 @@ import { LoginStatusSubjectService } from 'src/app/services/login-status.subject
 import { UserSessionService } from 'src/app/services/usersession.service';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-user-login',
@@ -61,7 +62,8 @@ export class UserLoginComponent implements OnInit {
         private userSessionService: UserSessionService,
         private contactSubjectService: ContactSubjectService,
         private formBuilder: FormBuilder,
-        private loginStatusSubjectService: LoginStatusSubjectService) { }
+        private loginStatusSubjectService: LoginStatusSubjectService,
+        private notificationService: NotificationService) { }
 
 
     public ngOnInit(): void {
@@ -115,6 +117,12 @@ export class UserLoginComponent implements OnInit {
         this.authenticationService.register(formValues.username, formValues.password)
             .pipe(
                 catchError((error: HttpErrorResponse) => {
+                    if (error.message) {
+                        this.notificationService.error(error.message);
+                    } else {
+                        this.notificationService.generalError();
+                    }
+
                     this.isLoading = false;
                     return throwError(error);
                 })
@@ -128,8 +136,12 @@ export class UserLoginComponent implements OnInit {
         this.authenticationService.login(formValues.username, formValues.password)
             .pipe(
                 catchError((error: HttpErrorResponse) => {
+                    if (error.status === 401) {
+                        this.notificationService.error("Invalid username or password");
+                    } else {
+                        this.notificationService.generalError();
+                    }
 
-                    //check the error status code, if it's a 401 unauthorized show bad login message
                     this.isLoading = false;
                     return throwError(error);
                 })
@@ -142,19 +154,15 @@ export class UserLoginComponent implements OnInit {
     private handleAuthenticationResponse(loginResponse: any): void {
         this.isLoading = false;
 
-        if (loginResponse.success) {
-            this.userSessionService.saveToken(loginResponse.token);
-            this.userSessionService.saveUserId(loginResponse.userId);
+        //can be combined into one method on the user sess service
+        this.userSessionService.saveToken(loginResponse.token);
+        this.userSessionService.saveUserId(loginResponse.userId);
 
-            this.contactSubjectService.getContacts(loginResponse.userId);
+        this.contactSubjectService.getContacts(loginResponse.userId);
 
-            this.isLoggedIn = true;
+        this.isLoggedIn = true;
 
-
-            this.loginStatusSubjectService.setLoginStatus(true);
-            this.loginForm.reset();
-        }
-
-        //show error message 
+        this.loginStatusSubjectService.setLoginStatus(true);
+        this.loginForm.reset();
     }
 }

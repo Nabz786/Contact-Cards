@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import { MatDialogRef } from "@angular/material";
+import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, Observable } from "rxjs";
 import { AddContactComponent } from "../contact-list/add-contact/add-contact.component";
 import { Contact } from "../shared/contact.model";
 import { ServiceResponse } from "../shared/ServiceResponse.model";
 import { ContactsService } from "./contact.service";
+import { NotificationService } from "./notification.service";
 
 @Injectable({
     providedIn: "root"
@@ -14,7 +16,10 @@ export class ContactSubjectService {
 
     public contacts$: Observable<Contact[]> = this.contactsSubject.asObservable();
 
-    constructor(private contactsService: ContactsService) { }
+    constructor(
+        private contactsService: ContactsService,
+        private notificationService: NotificationService
+        ) { }
 
     public addContact(contact: Contact, dialogRef: MatDialogRef<AddContactComponent>): void {
         this.contactsService.addContact(contact)
@@ -28,8 +33,9 @@ export class ContactSubjectService {
                     dialogRef.close();
 
                     this.contactsSubject.next(currentContacts);
+
                 } else {
-                    // call toaster message here?
+                     this.notificationService.error(serviceResponse.message);
                 }
             });
     }
@@ -48,7 +54,7 @@ export class ContactSubjectService {
 
                     this.contactsSubject.next(contacts);
                 } else {
-
+                    this.notificationService.error(serviceResponse.message);
                 }
             })
     }
@@ -62,6 +68,8 @@ export class ContactSubjectService {
                     dialogRef.close();
 
                     this.contactsSubject.next(filteredContactArray);
+                } else {
+                    this.notificationService.error(serviceResponse.message);
                 }
             })
     }
