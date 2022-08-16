@@ -12,9 +12,9 @@ import { NotFoundComponent } from './contact-list/not-found/not-found.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactCardComponent } from './contact-list/home/contact-card/contact-card.component';
 
-import { environment } from '../environments/environment';
-import { ContactsService } from './services/contact.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserLoginComponent } from './contact-list/user-login/user-login.component';
+import { AuthenticationInterceptor } from './shared/Interceptors/authentication.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     AddContactComponent,
     HomeComponent,
     NotFoundComponent,
-    ContactCardComponent
+    ContactCardComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +33,16 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
-  providers: [ContactsService],
+  providers: [ 
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthenticationInterceptor,
+    multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
