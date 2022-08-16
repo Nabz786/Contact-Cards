@@ -1,0 +1,21 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '14.x'
+  displayName: Install NodeJS
+- task: Npm@1
+  displayName: Install The Angular CLI
+  inputs:
+    command: 'custom'
+    customCommand: 'install @angular-cli'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run build'
+    workingDir: '$(Build.SourcesDirectory)/ContactListWebApp'
