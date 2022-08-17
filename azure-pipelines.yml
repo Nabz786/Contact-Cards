@@ -19,7 +19,7 @@ steps:
   inputs:
     command: 'install'
     
-- script: echo ls
+- script: echo $(Build.SourcesDirectory)
 # - task: Npm@1
 #   inputs:
 #     command: 'custom'
