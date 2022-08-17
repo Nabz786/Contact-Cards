@@ -19,7 +19,8 @@ steps:
   inputs:
     command: 'install'
     
-- script: echo $(Build.SourcesDirectory)
+- script: echo "Structure of work folder of this pipeline:"
+          tree $(Agent.WorkFolder)\1 /f
 # - task: Npm@1
 #   inputs:
 #     command: 'custom'
