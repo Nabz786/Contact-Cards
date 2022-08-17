@@ -20,9 +20,7 @@ steps:
     command: 'install'
 - task: CmdLine@2
   inputs:
-    script: |
-      echo "Structure of work folder of this pipeline:"
-      tree $(Agent.WorkFolder)\1 /f
+    script: ls
 
       
 # - task: Npm@1
