@@ -18,8 +18,10 @@ steps:
   displayName: Install Dependencies
   inputs:
     command: 'install'
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'run build'
-    workingDir: '$(Build.SourcesDirectory)/ContactListWebApp'
+    
+- script: ls
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     customCommand: 'run build'
+#     workingDir: '$(Build.SourcesDirectory)/ContactListWebApp'
