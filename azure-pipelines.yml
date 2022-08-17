@@ -6,14 +6,14 @@ pool:
 
 steps:
 - task: NodeTool@0
+  displayName: Install NodeJS
   inputs:
     versionSpec: '14.x'
-  displayName: Install NodeJS
 - task: Npm@1
   displayName: Install The Angular CLI
   inputs:
-    command: 'install'
-    customCommand: '@angular-cli'
+    command: 'custom'
+    customCommand: 'install -g @angular/cli'
 - task: Npm@1
   inputs:
     command: 'custom'
