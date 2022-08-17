@@ -18,9 +18,13 @@ steps:
   displayName: Install Dependencies
   inputs:
     command: 'install'
-    
-- script: echo "Structure of work folder of this pipeline:"
-          tree $(Agent.WorkFolder)\1 /f
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "Structure of work folder of this pipeline:"
+      tree $(Agent.WorkFolder)\1 /f
+
+      
 # - task: Npm@1
 #   inputs:
 #     command: 'custom'
