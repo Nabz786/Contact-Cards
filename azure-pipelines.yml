@@ -19,7 +19,7 @@ steps:
   inputs:
     command: 'install'
     
-- script: ls
+- script: echo 'ls'
 # - task: Npm@1
 #   inputs:
 #     command: 'custom'
