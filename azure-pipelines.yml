@@ -20,7 +20,7 @@ steps:
     command: 'install'
 - task: CmdLine@2
   inputs:
-    script: ls
+    script: ls -Rla
 
       
 # - task: Npm@1
