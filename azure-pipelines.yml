@@ -20,11 +20,11 @@ steps:
     script: | 
       cd $(Build.SourcesDirectory)/ContactListWebApp
       ls
-      npm install
-      npm run build
-      
-# - task: Npm@1
-#   inputs:
-#     command: 'custom'
-#     customCommand: 'run build'
-#     workingDir: '$(Build.SourcesDirectory)/ContactListWebApp'
+      npm install 
+- task: Npm@1
+  displayName: 'Build Web App'
+  inputs:
+    command: 'custom'
+    customCommand: 'run build'
+    workingDir: '$(Build.SourcesDirectory)/ContactListWebApp'
+  
