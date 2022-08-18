@@ -20,8 +20,10 @@ steps:
     command: 'install'
 - task: CmdLine@2
   inputs:
-    script: ls $(Build.SourcesDirectory)
-
+    script: | 
+      cd $(Build.SourcesDirectory)/ContactListWebApp
+      npm install
+      npm run build
       
 # - task: Npm@1
 #   inputs:
