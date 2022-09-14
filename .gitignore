@@ -363,3 +363,8 @@ MigrationBackup/
 FodyWeavers.xsd
 
 \dist
+ContactListAPI/appsettings.Development.json
+ContactListAPI/.config/dotnet-tools.json
+ContactListAPI/Properties/launchSettings.json
+ContactListWebApp/.editorconfig
+ContactListAPI/appsettings.json
