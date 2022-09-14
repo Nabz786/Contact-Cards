@@ -14,5 +14,7 @@ namespace ContactListAPI.Domain.Repositories
         Task<ServiceResponse<Contact>> DeleteContactAsync(int contactId);
 
         Task<ServiceResponse<Contact>> UpdateContactAsync(Contact updatedContact);
+
+        void BulkDeleteContactsByUserId(int userId);
     }
 }

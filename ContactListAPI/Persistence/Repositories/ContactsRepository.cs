@@ -125,6 +125,11 @@ namespace ContactListAPI.Persistence.Repositories
             }
         }
 
+        public void BulkDeleteContactsByUserId(int userId)
+        {
+            _contactsContext.Contacts.RemoveRange(_contactsContext.Contacts.Where(c => c.UserId == userId));
+        }
+
         private async Task<bool> DoesContactExist(int userId, string firstName, string lastName)
         {
             return await _contactsContext.Contacts
