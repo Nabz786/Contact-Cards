@@ -32,7 +32,6 @@ namespace ContactListAPI.Controllers
         [Route("addContact")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost]
         public async Task<IActionResult> AddContact(Contact contact)
         {
@@ -48,7 +47,6 @@ namespace ContactListAPI.Controllers
         [Route("UpdateContact")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateContact(Contact contact)
         {
             var serviceResponse = await _contactsRepository.UpdateContactAsync(contact);
@@ -65,7 +63,6 @@ namespace ContactListAPI.Controllers
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteContact(int contactId)
         {
             var serviceResponse = await _contactsRepository.DeleteContactAsync(contactId);
