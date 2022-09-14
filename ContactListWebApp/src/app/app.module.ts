@@ -15,34 +15,37 @@ import { ContactCardComponent } from './contact-list/home/contact-card/contact-c
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserLoginComponent } from './contact-list/user-login/user-login.component';
 import { AuthenticationInterceptor } from './shared/Interceptors/authentication.interceptor';
+import { UserDeleteAccountComponent } from './user/delete-account/user-delete-account.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    AddContactComponent,
-    HomeComponent,
-    NotFoundComponent,
-    ContactCardComponent,
-    UserLoginComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule
-  ],
-  providers: [ 
-    {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthenticationInterceptor,
-    multi: true,
-    }
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		HeaderComponent,
+		AddContactComponent,
+		HomeComponent,
+		NotFoundComponent,
+		ContactCardComponent,
+		UserLoginComponent,
+		UserDeleteAccountComponent
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		MaterialModule,
+		FormsModule,
+		ReactiveFormsModule,
+		HttpClientModule,
+		BrowserAnimationsModule
+	],
+	providers: [ 
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthenticationInterceptor,
+			multi: true,
+		}
+	],
+	bootstrap: [AppComponent],
+	entryComponents: [UserDeleteAccountComponent]
 })
 export class AppModule { }
