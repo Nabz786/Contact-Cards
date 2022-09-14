@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { MatDialogRef } from "@angular/material";
-import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, Observable } from "rxjs";
 import { AddContactComponent } from "../contact-list/add-contact/add-contact.component";
 import { Contact } from "../shared/contact.model";
