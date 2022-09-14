@@ -52,6 +52,7 @@ namespace ContactListAPI
 
             services.AddScoped<IUserAuthenticationRepository, UserAuthenticationRepository>();
             services.AddScoped<IContactsRepository, ContactsRepository>();
+            services.AddScoped<IUserActionsRepository, UserActionsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
