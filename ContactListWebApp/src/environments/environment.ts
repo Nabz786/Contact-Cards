@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   contactsApiUrl: "https://localhost:44339/contacts",
   authenticationApiUrl: "https://localhost:44339/userauthentication",
+  apiBaseUrl: "https://localhost:44339/"
 };
 
 /*
