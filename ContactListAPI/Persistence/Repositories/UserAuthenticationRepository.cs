@@ -56,6 +56,8 @@ namespace ContactListAPI.Persistence.Repositories
             {
                 userLoginResponse.Success = false;
 
+                userLoginResponse.ErrorMessage = "Username already in use, please choose another.";
+
                 return userLoginResponse;
             }
 
