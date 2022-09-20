@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ContactListAPI.Persistence.Contexts
 {
-  public class ContactsContext : DbContext
-  {
-    public ContactsContext(DbContextOptions<ContactsContext> dbContextOptions) : base(dbContextOptions)
+    public class ContactsContext : DbContext
     {
+        public ContactsContext(DbContextOptions<ContactsContext> dbContextOptions) : base(dbContextOptions)
+        {
 
+        }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
     }
-
-    public DbSet<User> Users { get; set; }
-    public DbSet<Contact> Contacts { get; set; }
-  }
 }
