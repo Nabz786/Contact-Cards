@@ -1,5 +1,5 @@
 trigger:
-  batches: true
+  batch: true
   branches:
    include:
      - master
