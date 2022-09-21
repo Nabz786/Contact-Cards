@@ -52,7 +52,7 @@ export class AddContactComponent implements OnInit {
     }
 
     public onSubmit() {
-        let newContact = this.contactDetailsForm.getRawValue() as Contact;
+        const newContact = this.contactDetailsForm.getRawValue() as Contact;
 
         if (newContact.id !== 0) {
             this.contactSubjectService.updateContact(newContact, this.dialogRef);

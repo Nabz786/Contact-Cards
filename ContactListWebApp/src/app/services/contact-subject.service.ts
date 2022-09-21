@@ -25,7 +25,7 @@ export class ContactSubjectService {
             .subscribe((serviceResponse: ServiceResponse) => {
 
                 if (serviceResponse.success) {
-                    let currentContacts = this.contactsSubject.getValue();
+                    const currentContacts = this.contactsSubject.getValue();
 
                     currentContacts.push(serviceResponse.returnResource as Contact);
 
@@ -43,8 +43,8 @@ export class ContactSubjectService {
         this.contactsService.updateContact(updatedContact)
             .subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse.success) {
-                    let contactToUpdateIndex = this.contactsSubject.getValue().findIndex(contact => contact.id === updatedContact.id);
-                    let contacts = this.contactsSubject.getValue();
+                    const contactToUpdateIndex = this.contactsSubject.getValue().findIndex(contact => contact.id === updatedContact.id);
+                    const contacts = this.contactsSubject.getValue();
 
                     contacts[contactToUpdateIndex].firstName = updatedContact.firstName;
                     contacts[contactToUpdateIndex].lastName = updatedContact.lastName;
@@ -55,14 +55,14 @@ export class ContactSubjectService {
                 } else {
                     this.notificationService.error(serviceResponse.message);
                 }
-            })
+            });
     }
 
     public deleteContact(contactId: number, dialogRef: MatDialogRef<AddContactComponent>) {
         this.contactsService.deleteContact(contactId)
             .subscribe((serviceResponse: ServiceResponse) => {
                 if (serviceResponse.success) {
-                    let filteredContactArray = this.contactsSubject.getValue().filter(contact => contact.id !== contactId);
+                    const filteredContactArray = this.contactsSubject.getValue().filter(contact => contact.id !== contactId);
 
                     dialogRef.close();
 
@@ -70,7 +70,7 @@ export class ContactSubjectService {
                 } else {
                     this.notificationService.error(serviceResponse.message);
                 }
-            })
+            });
     }
 
     public getContacts(userId: number) {

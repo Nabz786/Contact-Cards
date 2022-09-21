@@ -13,25 +13,25 @@ export class ContactsService {
     constructor(private httpClient: HttpClient) { }
 
     public addContact(contact: Contact) {
-        let finalUrl = this.baseUrl + "/addContact";
+        const finalUrl = this.baseUrl + "/addContact";
 
         return this.httpClient.post<ServiceResponse>(finalUrl, contact);
     }
 
     public getContacts(userId: number) {
-        let finalUrl = this.baseUrl + "/getContacts";
+        const finalUrl = this.baseUrl + "/getContacts";
 
         return this.httpClient.get<Contact[]>(finalUrl + `/${userId}`);
     }
 
     public updateContact(updatedContact: Contact) {
-        let finalUrl = this.baseUrl + "/updateContact";
+        const finalUrl = this.baseUrl + "/updateContact";
 
         return this.httpClient.put<ServiceResponse>(finalUrl, updatedContact);
     }
 
     public deleteContact(contactId: number) {
-        let finalUrl = this.baseUrl + "/deleteContact";
+        const finalUrl = this.baseUrl + "/deleteContact";
 
         return this.httpClient.delete<ServiceResponse>(finalUrl + `/${contactId}`);
     }

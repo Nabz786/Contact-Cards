@@ -5,7 +5,7 @@ import { MatSnackBar } from "@angular/material";
 	providedIn: "root"
 })
 export class NotificationService {
-	
+
 	constructor(private snackBar: MatSnackBar) { }
 
 	public error(message: string): void {
@@ -13,7 +13,7 @@ export class NotificationService {
 			duration: 5000,
 			verticalPosition: "top",
 			horizontalPosition: "right",
-			panelClass: 'notification-error'
+			panelClass: "notification-error"
 		});
 	}
 
@@ -22,7 +22,7 @@ export class NotificationService {
 			duration: 5000,
 			verticalPosition: "top",
 			horizontalPosition: "right",
-			panelClass: 'notification-error'
+			panelClass: "notification-error"
 		});
 	}
 }

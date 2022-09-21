@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { AddContactComponent } from '../contact-list/add-contact/add-contact.component';
-import { LoginStatusSubjectService } from '../services/login-status.subject.service';
-import { UserSessionService } from '../services/usersession.service';
-import { UserDeleteAccountComponent } from '../user/delete-account/user-delete-account.component';
+import { Component } from "@angular/core";
+import { MatDialog } from "@angular/material";
+import { AddContactComponent } from "../contact-list/add-contact/add-contact.component";
+import { LoginStatusSubjectService } from "../services/login-status.subject.service";
+import { UserSessionService } from "../services/usersession.service";
+import { UserDeleteAccountComponent } from "../user/delete-account/user-delete-account.component";
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css']
+    selector: "app-header",
+    templateUrl: "./header.component.html",
+    styleUrls: ["./header.component.css"]
 })
 export class HeaderComponent {
 
@@ -18,7 +18,7 @@ export class HeaderComponent {
         private userSessionService: UserSessionService) { }
 
     public openDialog(): void {
-        this.dialog.open(AddContactComponent, { width: '500px', data: { isEdit: false } });
+        this.dialog.open(AddContactComponent, { width: "500px", data: { isEdit: false } });
     }
 
     public logout(): void {
@@ -27,7 +27,7 @@ export class HeaderComponent {
     }
 
     public deleteAccount(): void {
-        this.dialog.open(UserDeleteAccountComponent, { width: '500px'});
+        this.dialog.open(UserDeleteAccountComponent, { width: "500px"});
     }
 }
 

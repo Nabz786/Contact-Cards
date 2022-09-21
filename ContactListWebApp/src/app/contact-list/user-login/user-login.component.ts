@@ -1,46 +1,46 @@
-import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { Observable, throwError } from 'rxjs';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ContactSubjectService } from 'src/app/services/contact-subject.service';
-import { LoginStatusSubjectService } from 'src/app/services/login-status.subject.service';
-import { UserSessionService } from 'src/app/services/usersession.service';
-import { catchError, tap } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NotificationService } from 'src/app/services/notification.service';
+import { animate, keyframes, style, transition, trigger } from "@angular/animations";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
+import { Observable, throwError } from "rxjs";
+import { AuthenticationService } from "src/app/services/authentication.service";
+import { ContactSubjectService } from "src/app/services/contact-subject.service";
+import { LoginStatusSubjectService } from "src/app/services/login-status.subject.service";
+import { UserSessionService } from "src/app/services/usersession.service";
+import { catchError, tap } from "rxjs/operators";
+import { HttpErrorResponse } from "@angular/common/http";
+import { NotificationService } from "src/app/services/notification.service";
 
 @Component({
-  selector: 'app-user-login',
-  templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.css'],
+  selector: "app-user-login",
+  templateUrl: "./user-login.component.html",
+  styleUrls: ["./user-login.component.css"],
   animations: [
-      trigger('showRegisterForm', [
-          transition('hideForm => showForm', [
+      trigger("showRegisterForm", [
+          transition("hideForm => showForm", [
             animate("1s ease", keyframes([
-                style({transform: 'translateX(0%)', opacity: '1', offset: 0}),
-                style({transform: 'translateX(-150%)', opacity: '0', offset: .5}),
-                style({transform: 'translateX(100%)', opacity: '0', offset: .75}),
-                style({transform: 'translateX(0%)', opacity: '1', offset: 1}),
+                style({transform: "translateX(0%)", opacity: "1", offset: 0}),
+                style({transform: "translateX(-150%)", opacity: "0", offset: .5}),
+                style({transform: "translateX(100%)", opacity: "0", offset: .75}),
+                style({transform: "translateX(0%)", opacity: "1", offset: 1}),
               ])),
           ]),
-          transition('showForm => hideForm', [
+          transition("showForm => hideForm", [
             animate("1s ease", keyframes([
-                style({transform: 'translateX(0%)', opacity: '1', offset: 0}),
-                style({transform: 'translateX(150%)', opacity: '0', offset: .5}),
-                style({transform: 'translateX(-100%)', opacity: '0', offset: .75}),
-                style({transform: 'translateX(0%)', opacity: '1', offset: 1}),
+                style({transform: "translateX(0%)", opacity: "1", offset: 0}),
+                style({transform: "translateX(150%)", opacity: "0", offset: .5}),
+                style({transform: "translateX(-100%)", opacity: "0", offset: .75}),
+                style({transform: "translateX(0%)", opacity: "1", offset: 1}),
               ])),
           ]),
       ]),
-      trigger('showLoginPage', [
-          transition(':enter', [
-            style({transform: 'translateY(-100%)'}),
-            animate("500ms ease", style({transform: 'translateY(0%)'}))
+      trigger("showLoginPage", [
+          transition(":enter", [
+            style({transform: "translateY(-100%)"}),
+            animate("500ms ease", style({transform: "translateY(0%)"}))
           ]),
-          transition(':leave', [
-            style({transform: 'translateY(0%)'}),
-            animate("500ms ease", style({transform: 'translateY(-100%)'}))
+          transition(":leave", [
+            style({transform: "translateY(0%)"}),
+            animate("500ms ease", style({transform: "translateY(-100%)"}))
           ])
       ])
   ]
@@ -55,7 +55,7 @@ export class UserLoginComponent implements OnInit {
 
     @ViewChild(FormGroupDirective) formDirective: FormGroupDirective;
 
-    @Input() logoutEvent: boolean = false; 
+    @Input() logoutEvent: boolean = false;
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -77,7 +77,7 @@ export class UserLoginComponent implements OnInit {
                         this.showRegisterForm = false;
                     }
                 })
-            )
+            );
     }
 
     public toggleRegisterForm(): void {
@@ -85,8 +85,8 @@ export class UserLoginComponent implements OnInit {
 
         this.loginForm.reset();
 
-        //Resets the submitted property of the form to false to remove the warning messages
-        this.formDirective.resetForm()
+        // Resets the submitted property of the form to false to remove the warning messages
+        this.formDirective.resetForm();
     }
 
     public handleSubmit(): void {
@@ -95,7 +95,7 @@ export class UserLoginComponent implements OnInit {
         if (!formValues.password || !formValues.username) {
             return;
         }
- 
+
         this.isLoading = true;
 
         if (this.showRegisterForm) {
@@ -129,7 +129,7 @@ export class UserLoginComponent implements OnInit {
             )
             .subscribe((registerResponse: any) => {
                 this.handleAuthenticationResponse(registerResponse);
-            })
+            });
     }
 
     private loginUser(formValues: any): void {
@@ -148,13 +148,13 @@ export class UserLoginComponent implements OnInit {
             )
             .subscribe((loginResponse: any) => {
                 this.handleAuthenticationResponse(loginResponse);
-            });    
+            });
     }
 
     private handleAuthenticationResponse(loginResponse: any): void {
         this.isLoading = false;
 
-        //can be combined into one method on the user sess service
+        // can be combined into one method on the user sess service
         this.userSessionService.saveToken(loginResponse.token);
         this.userSessionService.saveUserId(loginResponse.userId);
 

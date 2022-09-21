@@ -16,6 +16,6 @@ export class ContactCardComponent implements OnInit {
     ngOnInit() { }
 
     public editContact(): void {
-        this.dialog.open(AddContactComponent, { width: '500px', data: { isEdit: true, contact: this.contact } });
+        this.dialog.open(AddContactComponent, { width: "500px", data: { isEdit: true, contact: this.contact } });
     }
 }
