@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 export class UserSessionService {
 	constructor() {}
 
-	//may want to consider local storage, and some kind of session settings?
+	// may want to consider local storage, and some kind of session settings?
 	public logOut(): void {
 		window.sessionStorage.clear();
 	}

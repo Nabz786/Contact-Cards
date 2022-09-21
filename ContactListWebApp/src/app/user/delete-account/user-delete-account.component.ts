@@ -18,7 +18,7 @@ export class UserDeleteAccountComponent {
 		private userSessionService: UserSessionService,
 		private notificationService: NotificationService,
 		private loginStatusSubjectService: LoginStatusSubjectService
-	) {}
+	) { }
 
 	public deleteAccount(): void {
 		const userId = this.userSessionService.getUserId();

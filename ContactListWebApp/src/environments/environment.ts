@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  contactsApiUrl: "https://localhost:44339/contacts",
-  authenticationApiUrl: "https://localhost:44339/userauthentication",
-  apiBaseUrl: "https://localhost:44339/"
+	production: false,
+	contactsApiUrl: "https://localhost:44339/contacts",
+	authenticationApiUrl: "https://localhost:44339/userauthentication",
+	apiBaseUrl: "https://localhost:44339/"
 };
 
 /*

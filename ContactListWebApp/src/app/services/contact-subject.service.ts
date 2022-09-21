@@ -8,75 +8,75 @@ import { ContactsService } from "./contact.service";
 import { NotificationService } from "./notification.service";
 
 @Injectable({
-    providedIn: "root"
+	providedIn: "root"
 })
 export class ContactSubjectService {
-    private contactsSubject: BehaviorSubject<Contact[]> = new BehaviorSubject<Contact[]>([]);
+	private contactsSubject: BehaviorSubject<Contact[]> = new BehaviorSubject<Contact[]>([]);
 
-    public contacts$: Observable<Contact[]> = this.contactsSubject.asObservable();
+	public contacts$: Observable<Contact[]> = this.contactsSubject.asObservable();
 
-    constructor(
-        private contactsService: ContactsService,
-        private notificationService: NotificationService
-        ) { }
+	constructor(
+		private contactsService: ContactsService,
+		private notificationService: NotificationService
+	) { }
 
-    public addContact(contact: Contact, dialogRef: MatDialogRef<AddContactComponent>): void {
-        this.contactsService.addContact(contact)
-            .subscribe((serviceResponse: ServiceResponse) => {
+	public addContact(contact: Contact, dialogRef: MatDialogRef<AddContactComponent>): void {
+		this.contactsService.addContact(contact)
+			.subscribe((serviceResponse: ServiceResponse) => {
 
-                if (serviceResponse.success) {
-                    const currentContacts = this.contactsSubject.getValue();
+				if (serviceResponse.success) {
+					const currentContacts = this.contactsSubject.getValue();
 
-                    currentContacts.push(serviceResponse.returnResource as Contact);
+					currentContacts.push(serviceResponse.returnResource as Contact);
 
-                    dialogRef.close();
+					dialogRef.close();
 
-                    this.contactsSubject.next(currentContacts);
+					this.contactsSubject.next(currentContacts);
 
-                } else {
-                     this.notificationService.error(serviceResponse.message);
-                }
-            });
-    }
+				} else {
+					this.notificationService.error(serviceResponse.message);
+				}
+			});
+	}
 
-    public updateContact(updatedContact: Contact, dialogRef: MatDialogRef<AddContactComponent>) {
-        this.contactsService.updateContact(updatedContact)
-            .subscribe((serviceResponse: ServiceResponse) => {
-                if (serviceResponse.success) {
-                    const contactToUpdateIndex = this.contactsSubject.getValue().findIndex(contact => contact.id === updatedContact.id);
-                    const contacts = this.contactsSubject.getValue();
+	public updateContact(updatedContact: Contact, dialogRef: MatDialogRef<AddContactComponent>) {
+		this.contactsService.updateContact(updatedContact)
+			.subscribe((serviceResponse: ServiceResponse) => {
+				if (serviceResponse.success) {
+					const contactToUpdateIndex = this.contactsSubject.getValue().findIndex(contact => contact.id === updatedContact.id);
+					const contacts = this.contactsSubject.getValue();
 
-                    contacts[contactToUpdateIndex].firstName = updatedContact.firstName;
-                    contacts[contactToUpdateIndex].lastName = updatedContact.lastName;
+					contacts[contactToUpdateIndex].firstName = updatedContact.firstName;
+					contacts[contactToUpdateIndex].lastName = updatedContact.lastName;
 
-                    dialogRef.close();
+					dialogRef.close();
 
-                    this.contactsSubject.next(contacts);
-                } else {
-                    this.notificationService.error(serviceResponse.message);
-                }
-            });
-    }
+					this.contactsSubject.next(contacts);
+				} else {
+					this.notificationService.error(serviceResponse.message);
+				}
+			});
+	}
 
-    public deleteContact(contactId: number, dialogRef: MatDialogRef<AddContactComponent>) {
-        this.contactsService.deleteContact(contactId)
-            .subscribe((serviceResponse: ServiceResponse) => {
-                if (serviceResponse.success) {
-                    const filteredContactArray = this.contactsSubject.getValue().filter(contact => contact.id !== contactId);
+	public deleteContact(contactId: number, dialogRef: MatDialogRef<AddContactComponent>) {
+		this.contactsService.deleteContact(contactId)
+			.subscribe((serviceResponse: ServiceResponse) => {
+				if (serviceResponse.success) {
+					const filteredContactArray = this.contactsSubject.getValue().filter(contact => contact.id !== contactId);
 
-                    dialogRef.close();
+					dialogRef.close();
 
-                    this.contactsSubject.next(filteredContactArray);
-                } else {
-                    this.notificationService.error(serviceResponse.message);
-                }
-            });
-    }
+					this.contactsSubject.next(filteredContactArray);
+				} else {
+					this.notificationService.error(serviceResponse.message);
+				}
+			});
+	}
 
-    public getContacts(userId: number) {
-        this.contactsService.getContacts(userId)
-            .subscribe((contacts: Contact[]) => {
-                   this.contactsSubject.next(contacts);
-            });
-    }
+	public getContacts(userId: number) {
+		this.contactsService.getContacts(userId)
+			.subscribe((contacts: Contact[]) => {
+				this.contactsSubject.next(contacts);
+			});
+	}
 }
