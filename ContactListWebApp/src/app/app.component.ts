@@ -9,8 +9,4 @@ export class AppComponent {
 	title = "ContactList";
 
 	constructor() { }
-
-	private test(): void {
-		console.log('testing linting build');
-	}
 }
