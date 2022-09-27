@@ -33,4 +33,10 @@ steps:
     command: 'custom'
     customCommand: 'run build'
     workingDir: '$(Build.SourcesDirectory)/ContactListWebApp'
+- task: Npm@1
+  displayName: 'Lint Web App'
+  inputs: 
+    command: 'custom'
+    customCommand: 'run lint'
+    workingDir: '$(Build.SourcesDirectory)/ContactListWebApp'
   
