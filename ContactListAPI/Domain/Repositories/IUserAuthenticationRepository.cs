@@ -8,8 +8,8 @@ namespace ContactListAPI.Domain.Repositories
   {
     Task<UserLoginResponse> Register(User user, string password);
 
-    Task<UserLoginResponse> Login(string username, string password);
+    Task<UserLoginResponse> Login(string email, string password);
 
-    Task<bool> UserExists(string username);
+    Task<bool> UserExists(string email);
   }
 }

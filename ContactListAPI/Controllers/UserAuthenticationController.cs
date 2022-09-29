@@ -22,7 +22,7 @@ namespace ContactListAPI
         [Route("Register")]
         public async Task<IActionResult> RegisterUser(UserRegistrationRequest userRegistrationRequest)
         {
-            var userRegisterResponse = await _userAuthenticationRepository.Register(new User { Username = userRegistrationRequest.Username }, userRegistrationRequest.Password);
+            var userRegisterResponse = await _userAuthenticationRepository.Register(new User { Email = userRegistrationRequest.Email }, userRegistrationRequest.Password);
 
             return Ok(userRegisterResponse);
         }
@@ -34,7 +34,7 @@ namespace ContactListAPI
         [Route("Login")]
         public async Task<IActionResult> Login(UserLoginRequest userLoginRequest)
         {
-            var serviceResponse = await _userAuthenticationRepository.Login(userLoginRequest.Username, userLoginRequest.Password);
+            var serviceResponse = await _userAuthenticationRepository.Login(userLoginRequest.Email, userLoginRequest.Password);
 
             if (!serviceResponse.Success)
             {

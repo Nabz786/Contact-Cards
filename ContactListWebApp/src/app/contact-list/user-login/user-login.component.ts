@@ -70,8 +70,8 @@ export class UserLoginComponent implements OnInit {
 		this.initializeLoginForm();
 		this.$isLoggedIn = this.loginStatusSubjectService.$loginStatus
 			.pipe(
-				tap((loginStatus: boolean) => {
-					if (!loginStatus) {
+				tap((isLoggedIn: boolean) => {
+					if (!isLoggedIn) {
 						this.isLoading = false;
 						this.isLoggedIn = false;
 						this.showRegisterForm = false;
@@ -92,7 +92,7 @@ export class UserLoginComponent implements OnInit {
 	public handleSubmit(): void {
 		const formValues = this.loginForm.getRawValue();
 
-		if (!formValues.password || !formValues.username) {
+		if (!formValues.password || !formValues.email) {
 			return;
 		}
 
@@ -108,13 +108,13 @@ export class UserLoginComponent implements OnInit {
 
 	private initializeLoginForm(): void {
 		this.loginForm = this.formBuilder.group({
-			username: ["", Validators.required],
+			email: ["", [Validators.required, Validators.email]],
 			password: ["", Validators.required],
 		});
 	}
 
 	private registerUser(formValues: any): void {
-		this.authenticationService.register(formValues.username, formValues.password)
+		this.authenticationService.register(formValues.email, formValues.password)
 			.pipe(
 				catchError((error: HttpErrorResponse) => {
 					if (error.message) {
@@ -133,11 +133,11 @@ export class UserLoginComponent implements OnInit {
 	}
 
 	private loginUser(formValues: any): void {
-		this.authenticationService.login(formValues.username, formValues.password)
+		this.authenticationService.login(formValues.email, formValues.password)
 			.pipe(
 				catchError((error: HttpErrorResponse) => {
 					if (error.status === 401) {
-						this.notificationService.error("Invalid username or password");
+						this.notificationService.error("Invalid email or password");
 					} else {
 						this.notificationService.generalError();
 					}

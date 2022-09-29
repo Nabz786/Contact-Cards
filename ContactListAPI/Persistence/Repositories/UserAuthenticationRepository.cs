@@ -26,10 +26,10 @@ namespace ContactListAPI.Persistence.Repositories
             _configuration = configuration;
         }
 
-        public async Task<UserLoginResponse> Login(string username, string password)
+        public async Task<UserLoginResponse> Login(string email, string password)
         {
             var userLoginResponse = new UserLoginResponse();
-            var user = await _contactsContext.Users.FirstOrDefaultAsync(user => user.Username.ToLower().Equals(username.ToLower()));
+            var user = await _contactsContext.Users.FirstOrDefaultAsync(user => user.Email.Equals(email));
 
             if (user == null)
             {
@@ -52,7 +52,7 @@ namespace ContactListAPI.Persistence.Repositories
         {
             var userLoginResponse = new UserLoginResponse();
 
-            if (await UserExists(user.Username))
+            if (await UserExists(user.Email))
             {
                 userLoginResponse.Success = false;
 
@@ -84,9 +84,9 @@ namespace ContactListAPI.Persistence.Repositories
             passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
         }
 
-        public async Task<bool> UserExists(string username)
+        public async Task<bool> UserExists(string email)
         {
-            if (await _contactsContext.Users.AnyAsync(user => user.Username.ToLower() == username.ToLower()))
+            if (await _contactsContext.Users.AnyAsync(user => user.Email == email))
             {
                 return true;
             }
@@ -117,7 +117,7 @@ namespace ContactListAPI.Persistence.Repositories
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Email)
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
