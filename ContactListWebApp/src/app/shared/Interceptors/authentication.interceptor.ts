@@ -9,7 +9,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 	constructor(private userSessionService: UserSessionService) { }
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		console.log("token, ", this.userSessionService.getToken());
 		request = request.clone({
 			setHeaders: {
 				Authorization: `Bearer ${this.userSessionService.getToken()}`
