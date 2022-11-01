@@ -8,6 +8,15 @@ export class NotificationService {
 
 	constructor(private snackBar: MatSnackBar) { }
 
+	public notify(message: string): void {
+		this.snackBar.open(message, "", {
+			duration: 5000,
+			verticalPosition: "top",
+			horizontalPosition: "right",
+			panelClass: "notification-success"
+		});
+	}
+
 	public error(message: string): void {
 		this.snackBar.open(message, "", {
 			duration: 5000,

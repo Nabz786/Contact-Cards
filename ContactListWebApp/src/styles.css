@@ -6,3 +6,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: white !important;
   background-color: #E91E63 !important;
 }
+
+.notification-success {
+	color: white !important;
+	background-color: green !important;
+}
