@@ -25,8 +25,7 @@ steps:
   inputs:
     script: | 
       cd $(Build.SourcesDirectory)/ContactListWebApp
-      ls
-      npm install 
+      npm ci 
 - task: Npm@1
   displayName: 'Build Web App'
   inputs:
