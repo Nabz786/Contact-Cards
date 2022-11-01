@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { UserLoginComponent } from "./contact-list/user-login/user-login.component";
 import { AuthenticationInterceptor } from "./shared/Interceptors/authentication.interceptor";
 import { UserDeleteAccountComponent } from "./user/delete-account/user-delete-account.component";
+import { ForgotPasswordComponent } from "./contact-list/forgot-password/forgot-password.component";
 
 @NgModule({
 	declarations: [
@@ -26,7 +27,8 @@ import { UserDeleteAccountComponent } from "./user/delete-account/user-delete-ac
 		NotFoundComponent,
 		ContactCardComponent,
 		UserLoginComponent,
-		UserDeleteAccountComponent
+		UserDeleteAccountComponent,
+		ForgotPasswordComponent
 	],
 	imports: [
 		BrowserModule,

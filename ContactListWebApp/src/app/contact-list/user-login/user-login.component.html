@@ -1,7 +1,7 @@
 <ng-container *ngIf="!($isLoggedIn | async)" >
     <div class="login-page" @showLoginPage>
         <div class="login-container" [@showRegisterForm]="showRegisterForm ? 'showForm' : 'hideForm'">
-            <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+            <form *ngIf="!showForgotPasswordForm" [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
                 <p class="mat-h2 margin-top-1rem">{{showRegisterForm? "Create Account" : "Sign In" }}</p>
                 <mat-form-field class="margin-top-1rem width-80pct">
                     <input matInput placeholder="Email" formControlName="email">
@@ -20,9 +20,16 @@
                     {{showRegisterForm ? "Register" : "Login"}}
                 </button>
             </form>
-            <button class="register-button margin-top-1rem" (click)="toggleRegisterForm()"  [disabled]="isLoading">
-                {{showRegisterForm ? "Back to login" : "Click here to register"}}
-            </button>
+			<forgot-password *ngIf="showForgotPasswordForm" (toggleForm)="toggleForgotPasswordForm()"></forgot-password>
+			<ng-container *ngIf="!showForgotPasswordForm">
+				<button class="action-text margin-top-1rem" (click)="toggleRegisterForm()" [disabled]="isLoading">
+					{{showRegisterForm ? "Back to login" : "Click here to register"}}
+				</button>
+				<br>
+				<button *ngIf="!showRegisterForm" class="action-text margin-top-1rem" (click)="toggleForgotPasswordForm()">
+					Forgot Password
+				</button>
+			</ng-container>
         </div>
     </div>
 </ng-container>

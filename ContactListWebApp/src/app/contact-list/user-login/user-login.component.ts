@@ -49,11 +49,12 @@ export class UserLoginComponent implements OnInit {
 	public isLoggedIn: boolean = false;
 	public isLoading: boolean = false;
 	public showRegisterForm: boolean = false;
+	public showForgotPasswordForm: boolean = false;
 	public loginForm: FormGroup;
 
 	public $isLoggedIn: Observable<boolean>;
 
-	@ViewChild(FormGroupDirective) formDirective: FormGroupDirective;
+	@ViewChild(FormGroupDirective, { static: false }) formDirective: FormGroupDirective;
 
 	@Input() logoutEvent: boolean = false;
 
@@ -87,6 +88,11 @@ export class UserLoginComponent implements OnInit {
 
 		// Resets the submitted property of the form to false to remove the warning messages
 		this.formDirective.resetForm();
+	}
+
+	public toggleForgotPasswordForm(): void {
+		this.showRegisterForm = !this.showRegisterForm;
+		this.showForgotPasswordForm = !this.showForgotPasswordForm;
 	}
 
 	public handleSubmit(): void {
